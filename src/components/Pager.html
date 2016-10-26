@@ -3,17 +3,11 @@
         <span class="pagination-info">显示第 {{startIndex}} 到第 {{endIndex}} 条记录，总共 {{totalResult}} 条记录</span>
         <span class="page-list">
             每页显示
-            <span class="btn-group dropup">
-                <button type="button" class="btn btn-default dropdown-toggle" @click="show=!show">
-                    <span class="page-size">{{pageSize}}</span>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" v-show="show">
-                    <li v-bind:class="{ 'active': pageSize == size }" v-for="size in [1,2,3,4,5,10,25,50,100]">
-                        <a v-on:click="selectSize(size)" v-text="size"></a>
-                    </li>
-                </ul>
-            </span> 条记录
+            <dropdown :show="isOpen" :text="pageSize" @show-change="open_change">
+                <li :class="{ 'active': pageSize == size }" v-for="size in [10,25,50,100]">
+                    <a @click="selectSize(size)" v-text="size"></a>
+                </li>
+            </dropdown> 条记录
         </span>
     </div>
     <div class="pull-right pagination" ng-show="totalResult > pageSize">

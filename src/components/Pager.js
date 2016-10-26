@@ -1,7 +1,12 @@
-﻿module.exports = {
+﻿import Dropdown from './Dropdown.js'
+
+console.log(Dropdown)
+
+module.exports = {
     template: require('!html!./Pager.html'),
     data() {
         return {
+            isOpen: false,
             show: false
         }
     },
@@ -56,6 +61,9 @@
         }
     },
     methods: {
+        open_change(val) {
+            this.isOpen = val
+        },
         selectPage: function (num) {
             let size = arguments.length === 2 ? arguments[1] : this.pageSize
 
@@ -73,7 +81,11 @@
                     this.$emit('page-change', this.pageNo, size)
                 }
             }
+            this.isOpen = false
         }
+    },
+    components: {
+        Dropdown: Dropdown
     }
 }
 
