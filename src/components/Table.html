@@ -5,7 +5,7 @@
                 <tr role="row">
                     <th class="bs-checkbox" v-if="!!config.checkbox" style="text-align: center; vertical-align: middle; width: 36px;">
                         <div class="th-inner">
-                            <input type="checkbox" />
+                            <input type="checkbox" @change="check_all_change" />
                         </div>
                     </th>
                     <th style="text-align: center;" v-for="col in columns" v-show="col.visible">
@@ -18,7 +18,7 @@
             <tbody v-show="!loading">
                 <tr v-for="(row, index) in rows" :class="rowClass(row, index)" @click="row_click(row, index)">
                     <td style="text-align: center;" class="bs-checkbox" v-if="!!config.checkbox">
-                        <input type="checkbox" class="checkbox" />
+                        <input type="checkbox" @change="check_item_change($event, row, index)" class="checkbox" />
                     </td>
                     <cell style="text-align: center;"
                           v-for="col in columns" v-show="col.visible"

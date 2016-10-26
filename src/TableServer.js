@@ -41,6 +41,12 @@
             this.pager.page_no = pageNo
             this.pager.page_size = pageSize
             this.$emit('refresh', this.pager)
+        },
+        check_all_change(val) {
+            this.$emit('check-all-change', val)
+        },
+        check_item_change(val, row, index) {
+            this.$emit('check-change', val, row, index)
         }
     },
     components: {

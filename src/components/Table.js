@@ -16,6 +16,7 @@
     },
     data() {
         return {
+            checklist: [],
             page_no: 1,
             page_size: 10,
             sort_name: null,
@@ -48,6 +49,14 @@
         },
         cell_callback(row) {
             this.$emit('cell-callback', row)
+        },
+        check_all_change($event) {
+            let val = $event.target.checked
+            this.$emit('check-all-change', val)
+        },
+        check_item_change($event, row, index) {
+            let val = $event.target.checked
+            this.$emit('check-change', val, row, index)
         }
     },
     computed: {
