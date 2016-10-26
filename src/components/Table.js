@@ -40,8 +40,8 @@
         row_click(row, index) {
             this.$emit('row-click', row, index)
         },
-        rowClass() {
-            return ''
+        rowClass(item) {
+            return item.$row_class || ''
         },
         cell_click(row, col, index) {
             this.$emit('cell-click', row, col, index)
