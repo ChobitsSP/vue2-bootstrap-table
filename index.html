@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>vue-bootstrap-table</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="http://cdn.bootcss.com/bootstrap-table/1.10.1/bootstrap-table.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid" id="app">
+        <div class="bootstrap-table">
+            <!-- toolbars -->
+            <div class="fixed-table-container">
+                <div class="fixed-table-body">
+                    <table-server :columns="columns"
+                                  :rows="rows"
+                                  :total="total_result"
+                                  :loading="loading"
+                                  :init-pager="pager"
+                                  :config="config"
+                                  @refresh="child_refresh">
+                    </table-server>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="btns">
+        <div>
+            <button type="button" class="btn btn-xs btn-success" @click="callback('edit')">edit</button>
+            <button type="button" class="btn btn-xs btn-danger" @click="callback('remove')">delete</button>
+        </div>
+    </template>
+
+    <script src="http://cdn.bootcss.com/vue/2.0.3/vue.min.js"></script>
+    <script src="http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+    <!-- built files will be auto injected -->
+</body>
+</html>
+<script>
+    var eventHub = new Vue()
+
+    var c1 = Vue.component('btns', {
+        template: '#btns',
+        props: ['row', 'index'],
+        methods: {
+            callback(arg) {
+                eventHub.$emit(arg, this.row, this.index)
+            }
+        }
+    })
+
+    var columns = [
+        {
+            title: 'id',
+            field: 'id',
+            visible: true,
+            sortable: true,
+            filter: function (val) {
+                return val + '.'
+            }
+        },
+        {
+            title: 'name',
+            field: 'name',
+            visible: true,
+            sortable: true,
+        },
+        {
+            title: 'created date',
+            field: 'created_at',
+            filter(val) {
+                return val.substr(0, 10)
+            },
+            visible: true,
+            sortable: true,
+        },
+        {
+            title: 'edit',
+            field: 'edit',
+            visible: true,
+            createElement: function (createElement, row, col, index) {
+                var com1 = createElement(c1, {
+                    props: {
+                        row: row,
+                        index: index
+                    }
+                })
+
+                return createElement('td', {
+                    // 和`v-bind:class`一样的 API
+                    'class': {
+                        foo: true,
+                        bar: false
+                    },
+                }, [com1])
+            },
+        },
+    ]
+
+    var vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                rows: [],
+                total_result: 0,
+                loading: false,
+                config: {
+
+                },
+                pager: {
+                    page_no: 1,
+                    page_size: 10,
+                    sort_name: 'id',
+                    is_desc: false
+                }
+            }
+        },
+        created() {
+            eventHub.$on('edit', this.edit)
+            eventHub.$on('remove', this.remove)
+            this.refresh()
+        },
+        methods: {
+            child_refresh(pager) {
+                this.pager.page_no = pager.page_no
+                this.pager.page_size = pager.page_size
+                this.pager.sort_name = pager.sort_name
+                this.pager.is_desc = pager.is_desc
+                this.refresh()
+            },
+            refresh() {
+                var params = {
+                    sort: this.pager.sort_name + '|' + (this.pager.is_desc ? 'desc' : 'asc'),
+                    page: this.pager.page_no,
+                    per_page: this.pager.page_size,
+                }
+
+                this.loading = true
+
+                this.$http.get('http://vuetable.ratiw.net/api/users', { params: params }).then(data => {
+                    let rsp = data.data
+
+                    this.rows = rsp.data
+                    this.total_result = rsp.total
+                    this.loading = false
+                })
+            },
+            edit(row) {
+                row.name = new Date().getTime().toString()
+            },
+            remove(row, index) {
+                this.rows.splice(index, 1)
+            }
+        },
+        components: {
+            TableServer: window.TableServer
+        }
+    })
+</script>
