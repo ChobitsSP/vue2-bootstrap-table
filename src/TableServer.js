@@ -45,7 +45,7 @@
         check_all_change(val) {
             this.$emit('check-all-change', val)
         },
-        check_item_change(val, row, index) {
+        check_change(val, row, index) {
             this.$emit('check-change', val, row, index)
         }
     },
