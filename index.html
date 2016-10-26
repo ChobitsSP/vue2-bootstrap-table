@@ -24,13 +24,13 @@
                     <show-columns :columns="columns" @change="col_show_change"></show-columns>
                 </div>
                 <div class="pull-right search">
-                    <input class="form-control" type="text" placeholder="Search">
+                    <input class="form-control" type="text" placeholder="Search" v-model="q">
                 </div>
             </div>
             <div class="fixed-table-container">
                 <div class="fixed-table-body">
                     <table-server :columns="columns"
-                                  :rows="rows"
+                                  :rows="items"
                                   :total="total_result"
                                   :loading="loading"
                                   :init-pager="pager"
@@ -119,6 +119,7 @@
         el: '#app',
         data() {
             return {
+                q: null,
                 columns: columns,
                 rows: [],
                 total_result: 0,
@@ -170,8 +171,18 @@
             edit(row) {
                 row.name = new Date().getTime().toString()
             },
-            remove(row, index) {
+            remove(row) {
+                var index = this.rows.indexOf(row)
                 this.rows.splice(index, 1)
+            }
+        },
+        computed: {
+            items() {
+                var self = this
+                return self.rows.filter(function (user) {
+                    if (self.q === null) return true
+                    return user.name.indexOf(self.q) !== -1
+                })
             }
         },
         components: {
