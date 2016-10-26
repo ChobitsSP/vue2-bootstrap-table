@@ -1,3 +1,9 @@
 import TableServer from './TableServer.js'
+import ShowColumns from 'components/ShowColumns.js'
 
-window.TableServer = TableServer
+let btTable = {
+    TableServer,
+    ShowColumns
+}
+
+window.BtTable = btTable

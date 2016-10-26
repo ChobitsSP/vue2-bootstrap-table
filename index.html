@@ -9,7 +9,24 @@
 <body>
     <div class="container-fluid" id="app">
         <div class="bootstrap-table">
-            <!-- toolbars -->
+            <div class="fixed-table-toolbar">
+                <div class="bs-bars pull-left">
+                    <div id="toolbar">
+                        <button id="remove" class="btn btn-danger" disabled="">
+                            <i class="glyphicon glyphicon-remove"></i> Delete
+                        </button>
+                    </div>
+                </div>
+                <div class="columns columns-right btn-group pull-right">
+                    <button class="btn btn-default" type="button" name="refresh" title="Refresh" @click="refresh">
+                        <i class="glyphicon glyphicon-refresh icon-refresh"></i>
+                    </button>
+                    <show-columns :columns="columns" @change="col_show_change"></show-columns>
+                </div>
+                <div class="pull-right search">
+                    <input class="form-control" type="text" placeholder="Search">
+                </div>
+            </div>
             <div class="fixed-table-container">
                 <div class="fixed-table-body">
                     <table-server :columns="columns"
@@ -102,6 +119,7 @@
         el: '#app',
         data() {
             return {
+                columns: columns,
                 rows: [],
                 total_result: 0,
                 loading: false,
@@ -122,6 +140,9 @@
             this.refresh()
         },
         methods: {
+            col_show_change(i, val) {
+                this.columns[i].visible = val
+            },
             child_refresh(pager) {
                 this.pager.page_no = pager.page_no
                 this.pager.page_size = pager.page_size
@@ -154,7 +175,8 @@
             }
         },
         components: {
-            TableServer: window.TableServer
+            ShowColumns: window.BtTable.ShowColumns,
+            TableServer: window.BtTable.TableServer
         }
     })
 </script>

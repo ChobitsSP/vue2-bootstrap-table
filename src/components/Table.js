@@ -38,7 +38,7 @@
             this.$emit('page-change', pageNo, pageSize)
         },
         row_click(row, index) {
-            //this.$emit('row-click', row, index)
+            this.$emit('row-click', row, index)
         },
         rowClass() {
             return ''
