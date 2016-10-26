@@ -2,3 +2,9 @@
 node_modules/
 dist/
 npm-debug.log
+/static/.gitkeep
+/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/bootstrap-table.csproj.user
+/bootstrap-table.csproj
+/.vs/config/applicationhost.config
+/.vs/bootstrap-table/v14/.suo

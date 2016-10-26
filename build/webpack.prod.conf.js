@@ -15,7 +15,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     output: {
         path: config.build.assetsRoot,
-        filename: utils.assetsPath('js/[name].[chunkhash].js'),
+        //filename: utils.assetsPath('js/[name].[chunkhash].js'),
+        filename: utils.assetsPath('vue-bootstrap-table.js'),
         chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
     vue: {
