@@ -44,8 +44,8 @@
 
     <template id="btns">
         <div>
-            <button type="button" class="btn btn-xs btn-success" @click="callback('edit')">edit</button>
-            <button type="button" class="btn btn-xs btn-danger" @click="callback('remove')">delete</button>
+            <button type="button" class="btn btn-xs btn-success" @click.stop="callback('edit')">edit</button>
+            <button type="button" class="btn btn-xs btn-danger" @click.stop="callback('remove')">delete</button>
         </div>
     </template>
 
