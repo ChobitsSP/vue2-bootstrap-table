@@ -31,11 +31,13 @@
     },
     methods: {
         sortChange(field, is_desc) {
+            if (this.loading) return
             this.sort_name = field
             this.is_desc = is_desc
             this.$emit('sort-change', field, is_desc)
         },
         pageChange(pageNo, pageSize) {
+            if (this.loading) return
             this.$emit('page-change', pageNo, pageSize)
         },
         row_click(row, index) {
