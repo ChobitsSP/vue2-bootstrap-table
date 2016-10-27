@@ -1,7 +1,5 @@
 ﻿import Dropdown from './Dropdown.js'
 
-console.log(Dropdown)
-
 module.exports = {
     template: require('!html!./Pager.html'),
     data() {
