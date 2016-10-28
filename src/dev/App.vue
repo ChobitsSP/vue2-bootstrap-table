@@ -37,7 +37,7 @@
 
 <script>
     let Vue = require('vue')
-
+    
     module.exports = {
         data() {
             return {
