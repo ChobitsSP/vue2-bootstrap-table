@@ -17,6 +17,7 @@
     },
     data() {
         return {
+            check_all: false,
             checklist: [],
             page_no: 1,
             page_size: 10,
@@ -61,21 +62,12 @@
             return item.$row_class || ''
         },
         /*******************************************************/
-        check_all_change($event) {
-            this.checklist = []
-
-            if ($event.target.checked) {
-                this.rows.forEach(function (t) {
-                    this.checklist.push(t)
-                }.bind(this))
-            }
-        },
         check_item_change($event, row, index) {
             let val = $event.target.checked
             this.eventHub.$emit('check-change', val, row, index)
         },
         clear_checklist() {
-            this.checklist = []
+            this.check_all = false
         }
     },
     components: {
@@ -84,6 +76,15 @@
         Pager: require('./Pager.js'),
     },
     watch: {
+        check_all(val) {
+            this.checklist = []
+
+            if (val) {
+                this.rows.forEach(function (t) {
+                    this.checklist.push(t)
+                }.bind(this))
+            }
+        },
         checklist() {
             this.eventHub.$emit('checklist', this.checklist)
         }
