@@ -9,17 +9,8 @@ module.exports = {
     },
     data() {
         return {
-            list: [],
             show: false
         }
-    },
-    created(){
-        this.columns.forEach(function(t) {
-            this.list.push({
-                title: t.title,
-                visible: t.visible
-            })
-        }.bind(this))
     },
     mounted() {
         let self = this
@@ -31,10 +22,5 @@ module.exports = {
                 self.show = false
             })
         })
-    },
-    methods: {
-        change(col, index) {
-            this.$emit('change', index, col.visible)
-        }
     }
 }

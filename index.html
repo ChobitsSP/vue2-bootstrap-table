@@ -21,7 +21,7 @@
                     <button class="btn btn-default" type="button" name="refresh" title="Refresh" @click="refresh">
                         <i class="glyphicon glyphicon-refresh icon-refresh"></i>
                     </button>
-                    <show-columns :columns="columns" @change="col_show_change"></show-columns>
+                    <show-columns :columns="columns"></show-columns>
                 </div>
                 <div class="pull-right search">
                     <input class="form-control" type="text" placeholder="Search" v-model="q">
@@ -144,9 +144,6 @@
                 hub.$on('checklist', function (list) {
                     console.log(list)
                 })
-            },
-            col_show_change(i, val) {
-                this.columns[i].visible = val
             },
             child_refresh(pager) {
                 this.pager.page_no = pager.page_no

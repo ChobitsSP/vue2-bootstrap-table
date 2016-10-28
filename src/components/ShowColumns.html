@@ -6,9 +6,9 @@
         </span>
     </button>
     <ul class="dropdown-menu" v-show="show" aria-labelledby="simple-dropdown">
-        <li v-for="(col, index) in list">
+        <li v-for="(col, index) in columns">
             <label>
-                <input type="checkbox" v-model="col.visible" @change="change(col, index)">
+                <input type="checkbox" v-model="col.visible">
                 {{ col.title }}
             </label>
         </li>
