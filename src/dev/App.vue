@@ -109,11 +109,12 @@
         },
         methods: {
             init_hub(hub) {
-                hub.$on('refresh', this.child_refresh)
-
-                hub.$on('checklist', function (list) {
-                    console.log(list)
-                })
+                this.tb_hub = hub
+                this.tb_hub.$on('refresh', this.child_refresh)
+                this.tb_hub.$on('checklist', this.sync_checklist)
+            },
+            sync_checklist(list) {
+                console.log(list)
             },
             child_refresh(pager) {
                 this.pager.page_no = pager.page_no
@@ -136,11 +137,11 @@
 
                     this.rows = rsp.data
                     this.total_result = rsp.total
+                    this.tb_hub.$emit('clear-checklist')
                     this.loading = false
                 })
             },
             edit(row) {
-                console.log(row)
                 row.name = new Date().getTime().toString()
             },
             remove(row) {
@@ -175,9 +176,11 @@
             TableServer: require('src/TableServer.js')
         },
         beforeDestroy: function () {
+            this.tb_hub.$off('refresh', this.child_refresh)
+            this.tb_hub.$off('checklist', this.sync_checklist)
+
             this.btn_hub.$off('edit', this.edit)
             this.btn_hub.$off('remove', this.remove)
         }
     }
-
 </script>
