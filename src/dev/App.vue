@@ -151,7 +151,7 @@
         },
         computed: {
             items() {
-                return require('src/utils/filterBy.js')(this.rows, this.q)
+                return require('src/utils/filterBy.js')(this.rows, this.columns, this.q)
             }
         },
         components: {

@@ -1,4 +1,36 @@
-﻿/**
+﻿function getSearchArr(rows, columns) {
+    let res = []
+
+    rows.forEach(row => {
+        
+        let item = {}
+
+        columns.forEach(col => {
+            if(!col.field) return
+
+            let val = row[col.field]
+
+            if(!val) return
+
+            if(col.filter) {
+                val = col.filter(val)
+            }
+
+            item[col.field] = val
+        })
+
+        res.push(item)
+    })
+
+    return res
+}
+
+function myFilterBy(rows, columns, q, delimiter) {
+    let arr = getSearchArr(rows, columns)
+    return filterBy(arr, q, delimiter)
+}
+
+/**
  * Filter filter for arrays
  *
  * @param {String} search
@@ -30,7 +62,7 @@ function filterBy(arr, search, delimiter) {
         if (j) {
             while (j--) {
                 key = keys[j];
-                if (key === '$key' && contains(item.$key, search) || contains(getPath(val, key), search)) {
+                if (key === '$key' && contains(item.$key, search) || contains(val, search)) {
                     res.push(item);
                     break;
                 }
@@ -112,4 +144,4 @@ function contains(val, search) {
     }
 }
 
-module.exports = filterBy
+module.exports = myFilterBy
