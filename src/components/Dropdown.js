@@ -4,7 +4,7 @@ module.exports = {
     template: require('!html!./Dropdown.html'),
     props: {
         show: Boolean,
-        text: String
+        text: [String, Number]
     },
     methods: {
         mounted() {
