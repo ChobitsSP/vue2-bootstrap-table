@@ -29,6 +29,7 @@
             this.is_desc = this.pager.is_desc
             this.sort_name = this.pager.sort_name
         }
+        this.eventHub.$on('clear-checklist', this.clear_checklist)
     },
     methods: {
         /*******************************************************/
@@ -72,6 +73,9 @@
         check_item_change($event, row, index) {
             let val = $event.target.checked
             this.eventHub.$emit('check-change', val, row, index)
+        },
+        clear_checklist() {
+            this.checklist = []
         }
     },
     components: {
@@ -83,5 +87,8 @@
         checklist() {
             this.eventHub.$emit('checklist', this.checklist)
         }
+    },
+    beforeDestroy: function () {
+        this.eventHub.$off('clear-checklist', this.clear_checklist)
     }
 }
