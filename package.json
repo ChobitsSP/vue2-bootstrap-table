@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "lodash": "^4.16.4",
-    "vue": "^2.0.3"
+    "vue": "^2.0.3",
+    "vue-resource": "^1.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
