@@ -4,7 +4,7 @@
             <div class="fixed-table-toolbar">
                 <div class="bs-bars pull-left">
                     <div>
-                        <button id="remove" class="btn btn-danger">
+                        <button id="remove" class="btn btn-danger" @click="remove_all">
                             <i class="glyphicon glyphicon-remove"></i> Delete
                         </button>
                     </div>
@@ -37,13 +37,14 @@
 
 <script>
     let Vue = require('vue')
-    
+
     module.exports = {
         data() {
             return {
                 q: null,
                 columns: [],
                 rows: [],
+                checklist: [],
                 total_result: 0,
                 loading: false,
                 config: {
@@ -114,7 +115,7 @@
                 this.tb_hub.$on('checklist', this.sync_checklist)
             },
             sync_checklist(list) {
-                console.log(list)
+                this.checklist = list
             },
             child_refresh(pager) {
                 this.pager.page_no = pager.page_no
@@ -147,6 +148,12 @@
             remove(row) {
                 var index = this.rows.indexOf(row)
                 this.rows.splice(index, 1)
+            },
+            remove_all() {
+                this.checklist.forEach(function (t) {
+                    this.remove(t)
+                }.bind(this))
+                this.tb_hub.$emit('clear-checklist')
             }
         },
         computed: {
