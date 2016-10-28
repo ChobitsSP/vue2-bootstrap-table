@@ -5,7 +5,7 @@
                 <tr role="row">
                     <th class="bs-checkbox" v-if="!!config.checkbox" style="text-align: center; vertical-align: middle; width: 36px;">
                         <div class="th-inner">
-                            <input type="checkbox" v-model="check_all" />
+                            <input type="checkbox" v-check-all="[checklist.length, rows.length]" />
                         </div>
                     </th>
                     <th style="text-align: center;" v-for="col in columns" v-show="col.visible">

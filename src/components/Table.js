@@ -70,6 +70,9 @@
             this.check_all = false
         }
     },
+    directives: {
+        checkAll: require('src/directives/checkAll.js')
+    },
     components: {
         Cell: require('./Cell.js'),
         Column: require('./Column.js'),
