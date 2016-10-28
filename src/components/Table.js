@@ -1,6 +1,7 @@
 ﻿module.exports = {
     template: require('!html!./Table.html'),
     props: {
+        eventHub: Object,
         columns: {
             type: Array
         },
@@ -30,40 +31,47 @@
         }
     },
     methods: {
+        /*******************************************************/
         sortChange(field, is_desc) {
             if (this.loading) return
             this.sort_name = field
             this.is_desc = is_desc
-            this.$emit('sort-change', field, is_desc)
+            this.eventHub.$emit('sort-change', field, is_desc)
         },
         pageChange(pageNo, pageSize) {
             if (this.loading) return
-            this.$emit('page-change', pageNo, pageSize)
+            this.eventHub.$emit('page-change', pageNo, pageSize)
         },
+        /*******************************************************/
         row_click(row, index) {
-            this.$emit('row-click', row, index)
+            if (this.config.checkbox) {
+                let i = this.checklist.indexOf(row)
+
+                if (i >= 0) {
+                    this.checklist.splice(i, 1)
+                }
+                else {
+                    this.checklist.push(row)
+                }
+            }
+            this.eventHub.$emit('row-click', row, index)
         },
         rowClass(item) {
             return item.$row_class || ''
         },
-        cell_click(row, col, index) {
-            this.$emit('cell-click', row, col, index)
-        },
-        cell_callback(row) {
-            this.$emit('cell-callback', row)
-        },
+        /*******************************************************/
         check_all_change($event) {
-            let val = $event.target.checked
-            this.$emit('check-all-change', val)
+            this.checklist = []
+
+            if ($event.target.checked) {
+                this.rows.forEach(function (t) {
+                    this.checklist.push(t)
+                }.bind(this))
+            }
         },
         check_item_change($event, row, index) {
             let val = $event.target.checked
-            this.$emit('check-change', val, row, index)
-        }
-    },
-    computed: {
-        items() {
-            return this.rows
+            this.eventHub.$emit('check-change', val, row, index)
         }
     },
     components: {
@@ -71,8 +79,9 @@
         Column: require('./Column.js'),
         Pager: require('./Pager.js'),
     },
-    //beforeDestroy: function () {
-    //    //eventHub.$off('add-todo', this.addTodo)
-    //    //eventHub.$off('delete-todo', this.deleteTodo)
-    //}
+    watch: {
+        checklist() {
+            this.eventHub.$emit('checklist', this.checklist)
+        }
+    }
 }

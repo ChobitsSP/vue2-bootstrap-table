@@ -35,7 +35,7 @@
                                   :loading="loading"
                                   :init-pager="pager"
                                   :config="config"
-                                  @refresh="child_refresh">
+                                  @init-hub="init_hub">
                     </table-server>
                 </div>
             </div>
@@ -138,6 +138,13 @@
             this.refresh()
         },
         methods: {
+            init_hub(hub) {
+                hub.$on('refresh', this.child_refresh)
+
+                hub.$on('checklist', function (list) {
+                    console.log(list)
+                })
+            },
             col_show_change(i, val) {
                 this.columns[i].visible = val
             },
@@ -178,7 +185,20 @@
                 var self = this
                 return self.rows.filter(function (user) {
                     if (self.q === null) return true
-                    return user.name.indexOf(self.q) !== -1
+
+                    return self.columns.some(function (c) {
+                        let val = user[c.field]
+
+                        if (!val) return false
+
+                        if (c.filter) {
+                            val = c.filter(val)
+                        }
+
+                        val = val.toString()
+
+                        return val.indexOf && val.indexOf(self.q) !== -1
+                    })
                 })
             }
         },

@@ -18,13 +18,14 @@
             <tbody v-show="!loading">
                 <tr v-for="(row, index) in rows" :class="rowClass(row, index)" @click="row_click(row, index)">
                     <td style="text-align: center;" class="bs-checkbox" v-if="!!config.checkbox">
-                        <input type="checkbox" @change="check_item_change($event, row, index)" class="checkbox" />
+                        <input type="checkbox" v-model="checklist" :value="row" class="checkbox" />
                     </td>
                     <cell style="text-align: center;"
                           v-for="col in columns" v-show="col.visible"
-                          :column="col" :row="row" :index="index"></cell>
+                          :column="col" :row="row" :index="index">
+                    </cell>
                 </tr>
-                <tr class="no-records-found" v-if="items.length === 0">
+                <tr class="no-records-found" v-if="rows.length === 0">
                     <td colspan="999" class="text-center">没有找到匹配的记录</td>
                 </tr>
             </tbody>
