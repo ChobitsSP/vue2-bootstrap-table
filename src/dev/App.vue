@@ -151,24 +151,7 @@
         },
         computed: {
             items() {
-                var self = this
-                return self.rows.filter(function (user) {
-                    if (self.q === null) return true
-
-                    return self.columns.some(function (c) {
-                        let val = user[c.field]
-
-                        if (!val) return false
-
-                        if (c.filter) {
-                            val = c.filter(val)
-                        }
-
-                        val = val.toString()
-
-                        return val.indexOf && val.indexOf(self.q) !== -1
-                    })
-                })
+                return require('src/utils/filterBy.js')(this.rows, this.q)
             }
         },
         components: {
