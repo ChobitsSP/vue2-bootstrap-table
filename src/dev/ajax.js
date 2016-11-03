@@ -20,6 +20,6 @@ module.exports = function ajax(params) {
                 data: data,
                 total: all_data.length,
             })
-        }, 1000)
+        }, 500)
     })
 }
