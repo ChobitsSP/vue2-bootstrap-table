@@ -75,7 +75,7 @@
     },
     components: {
         Cell: require('./Cell.js'),
-        Column: require('./Column.js'),
+        Column: require('./Column.vue'),
         Pager: require('./Pager.js'),
     },
     watch: {
