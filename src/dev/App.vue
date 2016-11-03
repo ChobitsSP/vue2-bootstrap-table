@@ -37,6 +37,7 @@
 
 <script>
     let Vue = require('vue')
+    let ajax = require('./ajax.js')
 
     module.exports = {
         data() {
@@ -126,33 +127,31 @@
             },
             refresh() {
                 var params = {
-                    sort: this.pager.sort_name + '|' + (this.pager.is_desc ? 'desc' : 'asc'),
                     page: this.pager.page_no,
                     per_page: this.pager.page_size,
+                    sort: this.pager.sort_name,
+                    is_desc: this.pager.is_desc,
                 }
 
                 this.loading = true
 
-                this.$http.get('http://vuetable.ratiw.net/api/users', { params: params }).then(data => {
-                    let rsp = data.data
-
+                ajax(params).then(function (rsp) {
                     this.rows = rsp.data
                     this.total_result = rsp.total
                     this.tb_hub.$emit('clear-checklist')
                     this.loading = false
-                })
+                }.bind(this))
             },
-            edit(row) {
-                row.name = new Date().getTime().toString()
+            edit(row, index) {
+                this.rows[index].name = new Date().getTime().toString()
             },
-            remove(row) {
-                var index = this.rows.indexOf(row)
+            remove(row, index) {
                 this.rows.splice(index, 1)
             },
             remove_all() {
-                this.checklist.forEach(function (t) {
-                    this.remove(t)
-                }.bind(this))
+                //this.checklist.forEach(function (t) {
+                //    this.remove(t)
+                //}.bind(this))
                 this.tb_hub.$emit('clear-checklist')
             }
         },
@@ -162,7 +161,7 @@
             }
         },
         components: {
-            ShowColumns: require('components/ShowColumns.js'),
+            ShowColumns: require('components/ShowColumns.vue'),
             TableServer: require('src/TableServer.js')
         },
         beforeDestroy: function () {
