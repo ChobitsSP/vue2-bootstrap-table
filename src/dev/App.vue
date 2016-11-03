@@ -74,10 +74,6 @@
                 title: 'gender',
                 field: 'gender',
                 filter(val) {
-
-
-                    console.log(val, val === 'M' ? '♂' : '♀')
-
                     return val === 'M' ? '♂' : '♀'
                 },
                 visible: true,
