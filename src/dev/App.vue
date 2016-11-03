@@ -60,16 +60,26 @@
             }
         },
         created() {
-            this.columns.push({
-                title: 'id',
-                field: 'id',
-                visible: true,
-                sortable: true
+
+            ['id', 'name', 'nickname', 'email', 'birthdate'].forEach(t => {
+                this.columns.push({
+                    title: t,
+                    field: t,
+                    visible: true,
+                    sortable: true
+                })
             })
 
             this.columns.push({
-                title: 'name',
-                field: 'name',
+                title: 'gender',
+                field: 'gender',
+                filter(val) {
+
+
+                    console.log(val, val === 'M' ? '♂' : '♀')
+
+                    return val === 'M' ? '♂' : '♀'
+                },
                 visible: true,
                 sortable: true
             })

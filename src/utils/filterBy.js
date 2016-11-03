@@ -2,7 +2,6 @@
     let res = []
 
     rows.forEach(row => {
-        
         let item = {}
 
         columns.forEach(col => {
@@ -12,9 +11,9 @@
 
             if(!val) return
 
-            if(col.filter) {
-                val = col.filter(val)
-            }
+            //if(col.filter) {
+            //    val = col.filter(val)
+            //}
 
             item[col.field] = val
         })
