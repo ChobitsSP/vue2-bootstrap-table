@@ -1,4 +1,4 @@
-﻿import Dropdown from './Dropdown.js'
+﻿import Dropdown from './Dropdown.vue'
 
 module.exports = {
     template: require('!html!./Pager.html'),

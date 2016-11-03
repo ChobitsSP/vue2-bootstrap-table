@@ -1,9 +1,0 @@
-﻿<div class="btn-group dropup dropdown" :class="{ open: show }" ref="root">
-    <button type="button" @click="click" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="true">
-        <span>{{ text }}</span>
-        <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" v-show="show">
-        <slot></slot>
-    </ul>
-</div>
