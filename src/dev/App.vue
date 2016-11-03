@@ -162,7 +162,7 @@
         },
         components: {
             ShowColumns: require('components/ShowColumns.vue'),
-            TableServer: require('src/TableServer.js')
+            TableServer: require('src/TableServer.vue')
         },
         beforeDestroy: function () {
             this.tb_hub.$off('refresh', this.child_refresh)
