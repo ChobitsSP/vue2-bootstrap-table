@@ -59,56 +59,9 @@
             }
         },
         created() {
-
-            ['id', 'name', 'nickname', 'email', 'birthdate'].forEach(t => {
-                this.columns.push({
-                    title: t,
-                    field: t,
-                    visible: true,
-                    sortable: true
-                })
-            })
-
-            this.columns.push({
-                title: 'gender',
-                field: 'gender',
-                filter(val) {
-                    return val === 'M' ? '♂' : '♀'
-                },
-                visible: true,
-                sortable: true
-            })
-
-            this.columns.push({
-                title: 'created date',
-                field: 'created_at',
-                filter(val) {
-                    return val.substr(0, 10)
-                },
-                visible: true,
-                sortable: true
-            })
-
-            let c1 = require('./Btns.vue')
-
-            let btn_hub = this.btn_hub = new Vue()
-
-            this.columns.push({
-                title: 'edit/remove',
-                sortable: false,
-                visible: true,
-                createElement: function (createElement, row, col, index) {
-                    var com1 = createElement(c1, {
-                        props: {
-                            row: row,
-                            eventHub: btn_hub,
-                            index: index
-                        }
-                    })
-
-                    return createElement('td', {}, [com1])
-                }
-            })
+            this.btn_hub = new Vue()
+            let getcol = require('./columns.js')
+            this.columns = getcol(this.btn_hub)
 
             this.btn_hub.$on('edit', this.edit)
             this.btn_hub.$on('remove', this.remove)
@@ -117,18 +70,10 @@
         methods: {
             init_hub(hub) {
                 this.tb_hub = hub
-                this.tb_hub.$on('refresh', this.child_refresh)
                 this.tb_hub.$on('checklist', this.sync_checklist)
             },
             sync_checklist(list) {
                 this.checklist = list
-            },
-            child_refresh(pager) {
-                this.pager.page_no = pager.page_no
-                this.pager.page_size = pager.page_size
-                this.pager.sort_name = pager.sort_name
-                this.pager.is_desc = pager.is_desc
-                this.refresh()
             },
             refresh() {
                 this.rows = require('!json!./data.json')
