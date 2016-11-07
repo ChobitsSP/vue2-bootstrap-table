@@ -7,10 +7,4 @@ window.Vue = Vue
 
 Vue.use(VueResource)
 
-const app = new Vue({
-    template: '<app />',
-    router: router,
-    components: {
-        App: App
-    }
-}).$mount('#app')
+const app = new Vue(App).$mount('#app')

@@ -25,10 +25,10 @@
 </template>
 
 <script>
-    let Vue = require('vue')
+    let router = require('src/dev/router.js')
 
     module.exports = {
-
+        router: router
     }
 </script>
 
