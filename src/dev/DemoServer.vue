@@ -22,7 +22,7 @@
             <div class="fixed-table-body">
                 <table-server :columns="columns"
                               :rows="items"
-                              :total="total_result"
+                              :total="pager.total"
                               :loading="loading"
                               :init-pager="pager"
                               :config="config"
@@ -44,7 +44,6 @@
                 columns: [],
                 rows: [],
                 checklist: [],
-                total_result: 0,
                 loading: false,
                 config: {
                     checkbox: true
@@ -53,7 +52,8 @@
                     page_no: 1,
                     page_size: 10,
                     sort_name: 'id',
-                    is_desc: false
+                    is_desc: false,
+                    total: 0
                 }
             }
         },
@@ -94,7 +94,7 @@
 
                 ajax(params).then(function (rsp) {
                     this.rows = rsp.data
-                    this.total_result = rsp.total
+                    this.pager.total = rsp.total
                     this.tb_hub.$emit('clear-checklist')
                     this.loading = false
                 }.bind(this))
