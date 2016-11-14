@@ -1,7 +1,7 @@
 ﻿<template>
     <div class="bootstrap-table">
         <div class="fixed-table-toolbar">
-            <div class="bs-bars pull-left">
+            <div class="bars pull-left">
                 <div>
                     <button id="remove" class="btn btn-danger" @click="remove_all">
                         <i class="glyphicon glyphicon-remove"></i> Delete
