@@ -114,6 +114,7 @@
             },
             clear_checklist() {
                 this.check_all = false
+                this.checklist = []
             }
         },
         directives: {
