@@ -37,8 +37,8 @@
         title: 'edit/remove',
         sortable: false,
         visible: true,
-        createElement: function (createElement, row, col, index) {
-            var com1 = createElement(c1, {
+        createElement: function (h, row, col, index) {
+            var com1 = h(c1, {
                 props: {
                     row: row,
                     eventHub: eventHub,
@@ -46,7 +46,7 @@
                 }
             })
 
-            return createElement('td', {}, [com1])
+            return h('td', {}, [com1])
         }
     })
 
