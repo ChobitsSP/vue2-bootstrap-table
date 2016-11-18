@@ -3,7 +3,7 @@
         <div class="fixed-table-toolbar">
             <div class="bars pull-left">
                 <div>
-                    <button id="remove" class="btn btn-danger" @click="remove_all">
+                    <button class="btn btn-danger" @click="remove_all">
                         <i class="glyphicon glyphicon-remove"></i> Delete
                     </button>
                 </div>
@@ -103,13 +103,15 @@
             edit(row, index) {
                 this.rows[index].name = new Date().getTime().toString()
             },
-            remove(row, index) {
+            remove(row) {
+                let index = this.rows.indexOf(row);
                 this.rows.splice(index, 1)
             },
             remove_all() {
-                //this.checklist.forEach(function (t) {
-                //    this.remove(t)
-                //}.bind(this))
+                for (let i = 0; i < this.checklist.length; i++) {
+                    let row = this.rows.find(t => t.id === this.checklist[i].id)
+                    this.remove(row)
+                }
                 this.tb_hub.$emit('clear-checklist')
             }
         },
