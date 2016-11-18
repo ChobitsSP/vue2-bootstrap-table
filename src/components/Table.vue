@@ -21,8 +21,7 @@
                         <td style="text-align: center;" class="bs-checkbox" v-if="!!config.checkbox">
                             <input type="checkbox" v-model="checklist" :value="row" class="checkbox" />
                         </td>
-                        <cell style="text-align: center;"
-                              v-for="col in columns" v-show="col.visible"
+                        <cell v-for="col in columns" v-show="col.visible"
                               :column="col" :row="row" :index="index">
                         </cell>
                     </tr>
@@ -118,7 +117,7 @@
             }
         },
         directives: {
-            checkAll: require('src/directives/checkAll.js')
+            checkAll: require('../directives/checkAll.js')
         },
         components: {
             Cell: require('./Cell.js'),

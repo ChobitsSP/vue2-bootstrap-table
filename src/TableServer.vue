@@ -60,7 +60,7 @@
             }
         },
         components: {
-            btTable: require('components/Table.vue'),
+            btTable: require('./components/Table.vue'),
         },
         beforeDestroy: function () {
             this.eventHub.$off('sort-change', this.sort_change)

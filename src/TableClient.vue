@@ -60,18 +60,18 @@
         },
         computed: {
             filterRows() {
-                let filterBy = require('src/utils/filterBy.js')
+                let filterBy = require('./utils/filterBy.js')
                 let arr = filterBy(this.rows, this.columns, this.q)
                 return arr
             },
             items() {
-                let pagerBy = require('src/utils/pager.js')
+                let pagerBy = require('./utils/pager.js')
                 let arr = this.filterRows
                 return pagerBy(arr, this.pager)
             }
         },
         components: {
-            btTable: require('components/Table.vue'),
+            btTable: require('./components/Table.vue'),
         },
         beforeDestroy: function () {
             this.eventHub.$off('sort-change', this.sort_change)
