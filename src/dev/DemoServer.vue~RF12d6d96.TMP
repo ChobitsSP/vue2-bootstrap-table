@@ -93,7 +93,11 @@
                 this.loading = true
 
                 ajax(params).then(function (rsp) {
-                    rsp.data.forEach(t => t.$checked = false)
+
+                    rsp.data.forEach(t => {
+                        t.$checked = false
+                    })
+
                     this.rows = rsp.data
                     this.pager.total = rsp.total
                     this.tb_hub.$emit('clear-checklist')
