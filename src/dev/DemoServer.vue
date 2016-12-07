@@ -99,12 +99,13 @@
                 this.rows[index].name = new Date().getTime().toString()
             },
             remove(row) {
-                let index = this.rows.indexOf(row);
+                const r = this.rows.find(t => t.id === row.id)
+                const index = this.rows.indexOf(r)
                 this.rows.splice(index, 1)
             },
             remove_all() {
                 for (let i = 0; i < this.checklist.length; i++) {
-                    let row = this.rows.find(t => t.id === this.checklist[i].id)
+                    const row = this.rows.find(t => t.id === this.checklist[i].id)
                     this.remove(row)
                 }
             }
