@@ -26,7 +26,8 @@
                               :loading="loading"
                               :init-pager="pager"
                               :config="config"
-                              @init-hub="init_hub">
+                              @refresh="child_refresh"
+                              @selection-change="selection_change">
                 </table-server>
             </div>
         </div>
@@ -67,13 +68,8 @@
             this.refresh()
         },
         methods: {
-            init_hub(hub) {
-                this.tb_hub = hub
-                this.tb_hub.$on('refresh', this.child_refresh)
-                this.tb_hub.$on('checklist', this.sync_checklist)
-            },
-            sync_checklist(list) {
-                this.checklist = list
+            selection_change(val) {
+                this.checklist = val
             },
             child_refresh(pager) {
                 this.pager.page_no = pager.page_no
@@ -96,7 +92,6 @@
                     rsp.data.forEach(t => t.$checked = false)
                     this.rows = rsp.data
                     this.pager.total = rsp.total
-                    this.tb_hub.$emit('clear-checklist')
                     this.loading = false
                 }.bind(this))
             },
@@ -112,7 +107,6 @@
                     let row = this.rows.find(t => t.id === this.checklist[i].id)
                     this.remove(row)
                 }
-                this.tb_hub.$emit('clear-checklist')
             }
         },
         computed: {
@@ -125,9 +119,6 @@
             TableServer: require('src/TableServer.vue')
         },
         beforeDestroy: function () {
-            this.tb_hub.$off('refresh', this.child_refresh)
-            this.tb_hub.$off('checklist', this.sync_checklist)
-
             this.btn_hub.$off('edit', this.edit)
             this.btn_hub.$off('remove', this.remove)
         }

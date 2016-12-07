@@ -47,15 +47,23 @@
 <script>
     module.exports = {
         props: {
-            eventHub: Object,
             columns: {
-                type: Array
+                type: Array,
+                default: function () {
+                    return []
+                }
             },
             rows: {
-                type: Array
+                type: Array,
+                default: function () {
+                    return []
+                }
             },
             config: {
-                type: Object
+                type: Object,
+                default: function () {
+                    return {}
+                }
             },
             loading: Boolean,
             total: Number,
@@ -76,7 +84,6 @@
                 this.is_desc = this.pager.is_desc
                 this.sort_name = this.pager.sort_name
             }
-            this.eventHub.$on('clear-checklist', this.clear_checklist)
         },
         methods: {
             /*******************************************************/
@@ -84,11 +91,11 @@
                 if (this.loading) return
                 this.sort_name = field
                 this.is_desc = is_desc
-                this.eventHub.$emit('sort-change', field, is_desc)
+                this.$emit('sort-change', field, is_desc)
             },
             pageChange(pageNo, pageSize) {
                 if (this.loading) return
-                this.eventHub.$emit('page-change', pageNo, pageSize)
+                this.$emit('page-change', pageNo, pageSize)
             },
             /*******************************************************/
             row_click(row, index) {
@@ -102,19 +109,10 @@
                         this.checklist.push(row)
                     }
                 }
-                this.eventHub.$emit('row-click', row, index)
+                this.$emit('row-click', row, index)
             },
             rowClass(item) {
                 return item.$row_class || ''
-            },
-            /*******************************************************/
-            check_item_change($event, row, index) {
-                let val = $event.target.checked
-                this.eventHub.$emit('check-change', val, row, index)
-            },
-            clear_checklist() {
-                this.check_all = false
-                this.checklist = []
             }
         },
         directives: {
@@ -135,12 +133,16 @@
                     }.bind(this))
                 }
             },
+            rows() {
+                this.checklist = []
+                this.check_all = false
+            },
             checklist() {
-                this.eventHub.$emit('checklist', this.checklist)
+                this.$emit('selection-change', this.checklist)
             }
         },
         beforeDestroy: function () {
-            this.eventHub.$off('clear-checklist', this.clear_checklist)
+
         }
     }
 </script>
