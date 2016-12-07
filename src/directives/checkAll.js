@@ -4,7 +4,7 @@
         let len2 = binding.value[1]
         let checked = len1 === len2
 
-        el.checked = checked
+        el.checked = checked && len1 > 0
         el.indeterminate = !checked && len1 > 0
     }
 }
